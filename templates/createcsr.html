@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block createcsr %}
+    <div class="jumbotron">
+        <h1>Create a CSR</h1>
+        <p>You need to create and submit a CSR in order to create a transport/signing certificate.</p>
+        </p>
+    </div>
+    <!-- -->
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Certificate Generator
+                    <small>Will also create a private key.
+                    </small>
+                </h5>
+            </div>
+            <div class="ibox-content">
+                <form class="form-horizontal" method="post" action="/createcsr/">
+
+                    <div class="form-group">
+                        <div class="col-lg-10"><br/><span
+                                class="help-block m-b-none"><strong>TPP ID</strong></span><br/>
+                            {% if context.settings.tpp_id %}
+                                <input disabled type="text" name="tpp_id_disabled" for="tpp_id_disabled" id="tpp_id_disabled"
+                                       placeholder="e.g. COOLTPP01"
+                                       {% if context.settings.tpp_id %}value="{{ context.settings.tpp_id }}"{% endif %}
+                                       class="form-control">
+                                <input type="hidden" name="tpp_id" for="tpp_id" id="tpp_id"
+                                       {% if context.settings.tpp_id %}value="{{ context.settings.tpp_id }}"{% endif %}
+                                       >
+                            {% else %}
+                                <div class="alert alert-danger">
+                                    <div class="well well-sm">You must set a TPP ID otherwise you will not be able to
+                                        create a
+                                        valid CSR.
+                                        Click <a href="/"> here</a> to go back and set it.
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-lg-10"><br/><span
+                                class="help-block m-b-none"><strong>Software Statement ID</strong></span><br/>
+                            {% if context.settings.software_statement_id %}
+                                <input disabled type="text" name="software_statement_id_disabled" for="software_statement_id_disabled"
+                                       id="software_statement_id_disabled"
+                                       placeholder="e.g. 156fe39a-3cef-4056-b89c-76b71ec7d41c"
+                                       {% if context.settings.software_statement_id %}value="{{ context.settings.software_statement_id }}"{% endif %}
+                                       class="form-control">
+                                <input type="hidden" name="software_statement_id" for="software_statement_id" id="software_statement_id"
+                                       {% if context.settings.software_statement_id %}value="{{ context.settings.software_statement_id }}"{% endif %}
+                                       >
+                            {% else %}
+                                <div class="alert alert-danger">
+                                    <div class="well well-sm">You must set a Software Statement ID otherwise you will
+                                        not be
+                                        able to create a valid CSR.
+                                        Click <a href="/"> here</a> to go back and set it.
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-lg-10"><br/><span
+                                class="help-block m-b-none"><strong>Key Size</strong></span><br/>
+                            <select class="form-control m-b" name="key_size" for="key_size" id="key_size">
+                                {% if context.settings.key_size == "2048" %}
+                                    <option value="2048" selected>2048-bit</option>
+                                {% else %}
+                                    <option value="2048">2048-bit</option>
+                                {% endif %}
+                                {% if context.settings.key_size == "4096" %}
+                                    <option value="4096" selected>4096</option>
+                                {% else %}
+                                    <option value="4096">4096-bit</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                        <div class="col-lg-10"><br/><span
+                                class="help-block m-b-none"><strong>Locality Name (L)</strong></span><br/>
+                            <input type="text" name="csr_locality_name" for="csr_locality_name" id="csr_locality_name"
+                                   placeholder="e.g. London"
+                                   {% if context.settings.csr_locality_name %}value="{{ context.settings.csr_locality_name }}"{% endif %}
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10"><br/><span class="help-block m-b-none"><strong>State or Province Name (ST)</strong></span><br/>
+                            <input type="text" name="csr_state_or_province_name" for="csr_state_or_province_name" id="csr_state_or_province_name"
+                                   placeholder="e.g. Middlesex"
+                                   {% if context.settings.csr_state_or_province_name %}value="{{ context.settings.csr_state_or_province_name }}"{% endif %}
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10"><br/><span
+                                class="help-block m-b-none"><strong>Country Name (C)</strong></span><br/>
+                            <input type="text" name="csr_country_name" for="csr_country_name" id="csr_country_name"
+                                   placeholder="e.g. GB"
+                                   {% if context.settings.csr_country_name %}value="{{ context.settings.csr_country_name }}"{% endif %}
+                                   class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div id="privatekey">
+                        {% if context.settings.private_key_pem %}
+                            <p>
+                            <pre>{{ context.settings.private_key_pem }}</pre>
+                            </p>
+                        {% endif %}
+                        {% if context.settings.csr_pem %}
+                            <p>
+                            <pre>{{ context.settings.csr_pem }}</pre>
+                            </p>
+                        {% endif %}
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+
+                    {% if context.settings.tpp_id and context.settings.software_statement_id %}
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <button class="btn btn-primary" type="submit">Generate a New CSR</button>
+                            </div>
+                        </div>
+                    {% endif %}
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- -->
+
+{% endblock %}

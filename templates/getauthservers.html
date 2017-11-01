@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block getauthservers %}
+    <div class="jumbotron">
+        <h1>Retrieve Authorization Servers</h1>
+        <p>You need that list to onboard your application with the ASPSPs.</p>
+        </p>
+    </div>
+    <!-- -->
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Authorization Servers (Well-Known Endpoints) Retriever
+                    <small>Retrieves a Auth Servers.
+                    </small>
+                </h5>
+            </div>
+            <div class="ibox-content">
+                <form class="form-horizontal" method="post" action="/getauthservers/">
+
+                    <div class="form-group">
+                        <div class="col-lg-10"><br/><span
+                                class="help-block m-b-none"><strong>ASPSP List URL</strong></span><br/>
+                            <input disabled type="text" name="aspsp_list_url" for="aspsp_list_url" id="aspsp_list_url"
+                                   placeholder="e.g. https://www.example.com/aspsp"
+                                   {% if context.settings.aspsp_list_url %}value="{{ context.settings.aspsp_list_url }}"{% endif %}
+                                   class="form-control">
+                        <input type="hidden" name="aspsp_list_url" for="aspsp_list_url" id="aspsp_list_url"
+                                       {% if context.settings.aspsp_list_url %}value="{{ context.settings.aspsp_list_url }}"{% endif %}
+                                       >
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                {% if context.settings.authorization_servers %}
+                    <p>
+                    <pre>{{ context.settings.authorization_servers }}</pre>
+                    </p>
+                {% endif %}
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <button class="btn btn-primary" type="submit">Get Authorization Servers</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- -->
+
+{% endblock %}

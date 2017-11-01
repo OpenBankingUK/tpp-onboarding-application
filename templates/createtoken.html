@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% block createtoken %}
+    <div class="jumbotron">
+        <h1>Get an Access Token (JWT)</h1>
+        <p>You need to get an Access Token in order to access the Open Banking APIs programmatically.</p>
+        </p>
+    </div>
+    <!-- -->
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Access Token (JWT) Getter
+                    <small>Get access token using a signed JWT.
+                    </small>
+                </h5>
+            </div>
+            <div class="ibox-content">
+                <form class="form-horizontal" method="post" action="/getaccesstoken/">
+
+                    <div class="form-group">
+                        <div class="col-lg-10"><br/><span
+                                class="help-block m-b-none"><strong>Software Statement ID</strong></span><br/>
+                            {% if context.settings.software_statement_id %}
+                                <input disabled type="text" name="software_statement_id_disabled" for="software_statement_id_disabled"
+                                       id="software_statement_id_disabled"
+                                       placeholder="e.g. 156fe39a-3cef-4056-b89c-76b71ec7d41c"
+                                       {% if context.settings.software_statement_id %}value="{{ context.settings.software_statement_id }}"{% endif %}
+                                       class="form-control">
+                                <input type="hidden" name="software_statement_id" for="software_statement_id" id="software_statement_id"
+                                       {% if context.settings.software_statement_id %}value="{{ context.settings.software_statement_id }}"{% endif %}
+                                       >
+                            {% else %}
+                                <div class="alert alert-danger">
+                                    <div class="well well-sm">You must set a Software Statement ID otherwise you will
+                                        not be
+                                        able to create a valid CSR.
+                                        Click <a href="/"> here</a> to go back and set it.
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-10"><br/><span
+                                class="help-block m-b-none"><strong>KID</strong> (auto-generated)</span><br/>
+                            {% if context.settings.kid %}
+                                <input disabled type="text" name="kid_disabled" for="kid_disabled" id="kid_disabled"
+                                       placeholder="e.g. 243665868fa345e45d45b3c"
+                                       {% if context.settings.kid %}value="{{ context.settings.kid }}"{% endif %}
+                                       class="form-control">
+                                <input type="hidden" name="kid" for="kid" id="kid"
+                                       {% if context.settings.kid %}value="{{ context.settings.kid }}"{% endif %}
+                                       >
+                            {% else %}
+                                <div class="alert alert-danger">
+                                    <div class="well well-sm">You must set a KID otherwise you will not be able to
+                                        request an access token. A KID is created when you create a valid CSR.
+                                        Click <a href="/createcsr"> here</a> to go back and set it.
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-10"><br/><span
+                                class="help-block m-b-none"><strong>Client Scopes</strong></span><br/>
+                            {% if context.settings.client_scopes %}
+                                <input disabled type="text" name="client_scopes_disabled" for="client_scopes_disabled" id="client_scopes_disabled"
+                                       placeholder="e.g. ASPSPReadAccess TPPReadAccess"
+                                       {% if context.settings.client_scopes %}value="{{ context.settings.client_scopes }}"{% endif %}
+                                       class="form-control">
+                                <input type="hidden" name="client_scopes" for="client_scopes" id="client_scopes"
+                                       {% if context.settings.client_scopes %}value="{{ context.settings.client_scopes }}"{% endif %}
+                                       >
+                            {% else %}
+                                <div class="alert alert-danger">
+                                    <div class="well well-sm">You must set client scopes otherwise you will
+                                        not be able to request an access token. Ask you Open Banking support contact for
+                                        the
+                                        correct scopes.
+                                        Click <a href="/"> here</a> to go back and set it.
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-10"><br/><span
+                                class="help-block m-b-none"><strong>Token Url</strong></span><br/>
+                            {% if context.settings.token_url %}
+                                <input disabled type="text" name="token_url_disabled" for="token_url_disabled" id="token_url_disabled"
+                                       placeholder="e.g. https://example.com/token"
+                                       {% if context.settings.token_url %}value="{{ context.settings.token_url }}"{% endif %}
+                                       class="form-control">
+                                <input type="hidden" name="token_url" for="token_url" id="token_url"
+                                       {% if context.settings.client_scopes %}value="{{ context.settings.client_scopes }}"{% endif %}
+                                       >
+                            {% else %}
+                                <div class="alert alert-danger">
+                                    <div class="well well-sm">You must set token URL otherwise you will
+                                        not be able to request an access token. Ask you Open Banking support contact for
+                                        the
+                                        correct token URL.
+                                        Click <a href="/"> here</a> to go back and set it.
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    {% if context.settings.access_token %}
+                        <p>
+                        <pre>{{ context.settings.access_token }}</pre>
+                        </p>
+                    {% endif %}
+
+                    <div class="hr-line-dashed"></div>
+
+                    {% if context.settings.kid and
+                          context.settings.software_statement_id and
+                          context.settings.client_scopes and
+                          context.settings.token_url %}
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <button class="btn btn-primary" type="submit">Get an Access Token</button>
+                            </div>
+                        </div>
+                    {% endif %}
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- -->
+
+{% endblock %}

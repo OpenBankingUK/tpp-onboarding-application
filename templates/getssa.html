@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block getssa %}
+    <div class="jumbotron">
+        <h1>Retrieve Software Statement Assertion (SSA)</h1>
+        <p>You need an SSA to onboard your application with the ASPSPs.</p>
+        </p>
+    </div>
+    <!-- -->
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>SSA Retriever
+                    <small>Retrieves a signed SSA.
+                    </small>
+                </h5>
+            </div>
+            <div class="ibox-content">
+                <form class="form-horizontal" method="post" action="/getssa/">
+
+                    <div class="form-group">
+                        <div class="col-lg-10"><br/><span
+                                class="help-block m-b-none"><strong>TPP ID</strong></span><br/>
+                            {% if context.settings.tpp_id %}
+                                <input disabled type="text" name="tpp_id" for="tpp_id" id="tpp_id"
+                                       placeholder="e.g. COOLTPP01"
+                                       {% if context.settings.tpp_id %}value="{{ context.settings.tpp_id }}"{% endif %}
+                                       class="form-control">
+                                <input type="hidden" name="tpp_id" for="tpp_id" id="tpp_id"
+                                       {% if context.settings.tpp_id %}value="{{ context.settings.tpp_id }}"{% endif %}
+                                       >
+                            {% else %}
+                                <div class="alert alert-danger">
+                                    <div class="well well-sm">You must set a TPP ID otherwise you will not be able to
+                                        create a
+                                        valid CSR.
+                                        Click <a href="/"> here</a> to go back and set it.
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-lg-10"><br/><span
+                                class="help-block m-b-none"><strong>Software Statement ID</strong></span><br/>
+                            {% if context.settings.software_statement_id %}
+                                <input disabled type="text" name="software_statement_id" for="software_statement_id"
+                                       id="software_statement_id"
+                                       placeholder="e.g. 156fe39a-3cef-4056-b89c-76b71ec7d41c"
+                                       {% if context.settings.software_statement_id %}value="{{ context.settings.software_statement_id }}"{% endif %}
+                                       class="form-control">
+                                <input type="hidden" name="software_statement_id" for="software_statement_id" id="software_statement_id"
+                                       {% if context.settings.software_statement_id %}value="{{ context.settings.software_statement_id }}"{% endif %}
+                                       >
+                            {% else %}
+                                <div class="alert alert-danger">
+                                    <div class="well well-sm">You must set a Software Statement ID otherwise you will
+                                        not be
+                                        able to create a valid CSR.
+                                        Click <a href="/"> here</a> to go back and set it.
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-10"><br/><span
+                                class="help-block m-b-none"><strong>SSA Retrieval URL</strong></span><br/>
+                            {% if context.settings.tpp_ssa_url %}
+                                <input disabled type="text" name="tpp_ssa_url" for="tpp_ssa_url" id="tpp_ssa_url"
+                                       placeholder="e.g. https://www.example.com/ssa"
+                                       {% if context.settings.tpp_ssa_url %}value="{{ context.settings.tpp_ssa_url }}"{% endif %}
+                                       class="form-control">
+                                <input type="hidden" name="tpp_ssa_url" for="tpp_ssa_url" id="tpp_ssa_url"
+                                       {% if context.settings.tpp_ssa_url %}value="{{ context.settings.tpp_ssa_url }}"{% endif %}
+                                       >
+                            {% else %}
+                                <div class="alert alert-danger">
+                                    <div class="well well-sm">You must set a TPP SSA URL otherwise you will
+                                        not be
+                                        able to retrieve an SSA.
+                                        Click <a href="/"> here</a> to go back and set it.
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+
+                    <div class="hr-line-dashed"></div>
+                    {% if context.settings.software_statement_assertion %}
+                        <p>
+                        <pre>{{ context.settings.software_statement_assertion }}</pre>
+                        </p>
+                    {% endif %}
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <button class="btn btn-primary" type="submit">Get an SSA</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- -->
+
+{% endblock %}

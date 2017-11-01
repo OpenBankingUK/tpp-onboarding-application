@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Open Banking Test Helper | Dashboard</title>
+
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/static/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <link href="/static/css/animate.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="wrapper">
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+                <li>
+                    <a href="/"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span></a>
+                </li>
+                <li>
+                    <a href="/createcsr"><i class="fa fa-th-large"></i> <span class="nav-label">Create a CSR</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/getaccesstoken"><i class="fa fa-th-large"></i> <span class="nav-label">Create an Access Token</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/getssa"><i class="fa fa-th-large"></i> <span class="nav-label">Get SSA</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/getauthservers"><i class="fa fa-th-large"></i> <span class="nav-label">Get Authorization Servers</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/onboard"><i class="fa fa-th-large"></i> <span class="nav-label">Onboard App</span>
+                    </a>
+                </li>
+                <!--
+                <li>
+                    <a href="/authorizeapp"><i class="fa fa-th-large"></i> <span class="nav-label">Authorize App</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/callaccounts"><i class="fa fa-th-large"></i> <span class="nav-label">Call /accounts</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/createacsr"><i class="fa fa-th-large"></i> <span class="nav-label">Create a CSR</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/apponboarding"><i class="fa fa-th-large"></i> <span
+                            class="nav-label">App Onboarding</span> </a>
+                </li>
+                <li>
+                    <a href="/appauthorization"><i class="fa fa-th-large"></i> <span
+                            class="nav-label">App Authorization</span> </a>
+                </li>
+                <li>
+                    <a href="/apitestcall"><i class="fa fa-th-large"></i> <span class="nav-label">API Test Call</span>
+                    </a>
+                </li>
+                -->
+            </ul>
+
+        </div>
+    </nav>
+
+    <div id="page-wrapper" class="gray-bg">
+
+
+        <div>
+            {% block home %}{% endblock %}
+            {% block createcsr %}{% endblock %}
+            {% block createtoken %}{% endblock %}
+            {% block getssa %}{% endblock %}
+            {% block getauthservers %}{% endblock %}
+            {% block onboardapp %}{% endblock %}
+
+            {% block apponboarding %}{% endblock %}
+            {% block appauthorization %}{% endblock %}
+            {% block apitestcall %}{% endblock %}
+            {% block index %}{% endblock %}
+            {% block tpp %}{% endblock %}
+            {% block tpp_list %}{% endblock %}
+            {% block tpp_ptc %}{% endblock %}
+            {% block tpp_ptc_list %}{% endblock %}
+            {% block app %}{% endblock %}
+            {% block app_list %}{% endblock %}
+            {% block app_credentials_nc %}{% endblock %}
+            {% block app_credentials_nc_list %}{% endblock %}
+            {% block app_credentials_sc %}{% endblock %}
+            {% block app_credentials_sc_list %}{% endblock %}
+            {% block app_credentials_ssa %}{% endblock %}
+            {% block app_credentials_ssa_list %}{% endblock %}
+            {% block app_credentials_ob_list %}{% endblock %}
+            {% block app_credentials_aspsp_list %}{% endblock %}
+            {% block aspsp %}{% endblock %}
+            {% block aspsp_list %}{% endblock %}
+            {% block aspsp_credentials %}{% endblock %}
+            {% block aspsp_credentials_list %}{% endblock %}
+            {% block api_list %}{% endblock %}
+            {% block api %}{% endblock %}
+            {% block test_request %}{% endblock %}
+
+            {% include "bottom-spacer.html" %}
+        </div>
+
+        <div class="footer">
+            <div class="pull-right">
+                Written by <strong>Jacek Artymiak</strong>
+            </div>
+            {% include "copyright.html" %}
+        </div>
+
+    </div>
+</div>
+
+<!-- Mainly scripts -->
+<script src="/static/js/jquery-3.1.1.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="/static/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="/static/js/plugins/dataTables/datatables.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="/static/js/inspinia.js"></script>
+<script src="/static/js/plugins/pace/pace.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('table.dataTables-tpp').DataTable({
+            pageLength: 25,
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+                {extend: 'copy'},
+                {extend: 'csv'},
+                {extend: 'excel', title: 'ReportFile'},
+                {extend: 'pdf', title: 'ReportFile'},
+
+                {
+                    extend: 'print',
+                    customize: function (win) {
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).css('font-size', '10px');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ]
+
+        });
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block onboardapp %}
+    <div class="jumbotron">
+        <h1>Onboard App</h1>
+        <p>You need to onboard your application with the ASPSPs' authorization servers.</p>
+        </p>
+    </div>
+    <!-- -->
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Application Onboarder
+                    <small>Onbpards your app.
+                    </small>
+                </h5>
+            </div>
+            <div class="ibox-content">
+                <form class="form-horizontal" method="post" action="/onboard/">
+
+                    <div class="form-group">
+                        <div class="col-lg-10"><br/><span
+                                class="help-block m-b-none"><strong>Authorization Servers</strong></span><br/>
+
+                        {% for auth_servers in context.settings.authorization_servers %}
+                            {% for server in auth_servers %}
+                                <div>
+                                <label><input type="radio" name="authorization_server" for="authorization_server" id="authorization_server"
+                                       placeholder="e.g. http://www.example.com"
+                                       value="{{ server.BaseApiDNSUri }}"
+                                       class="form-control"> {{ server.CustomerFriendlyName }} @ {{ server.BaseApiDNSUri }}
+                                </label>
+                                </div>
+                            {%  endfor %}
+                        {%  endfor %}
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                {% if context.settings.authorization_servers %}
+                    <p>
+                    App onboarding exception
+                    <pre>{{ context.settings.app_onboarding_status_exception }}</pre>
+                    URL
+                    <pre>{{ context.settings.app_onboarding_status_url }}</pre>
+                    Response Status Code
+                    <pre>{{ context.settings.app_onboarding_status_code }}</pre>
+                    Resonse Reason
+                    <pre>{{ context.settings.app_onboarding_reason }}</pre>
+                    Response Text
+                    <pre>{{ context.settings.app_onboarding_text }}</pre>
+                    </p>
+                {% endif %}
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <button class="btn btn-primary" type="submit">Onboard App</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- -->
+
+{% endblock %}
