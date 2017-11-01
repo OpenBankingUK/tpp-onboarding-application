@@ -24,8 +24,11 @@ Set the `SECRET_KEY` environment variable to the value of the new key.
 ### Environment variables
 
 Set `CACHE_TIMEOUT` to `3600`
+
 Set `TEMPLATES_FOLDER` to `templates`
+
 Set `TEST_API_ENDPOINT` to `/accounts`
+
 Set `FLASK_DEBUG` to `True`
 
 ## Copyright
