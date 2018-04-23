@@ -41,15 +41,18 @@ docker-compose -f local.yml up
 
 The server will be available at [http://localhost](http://localhost/).
 
-## Deployment Notes
+## Environment Variables
 
-You will ned to generate a new secret key for your application.
+This section documents the environment variables that can be used to configure
+an instance.
 
-### Generating secret key:
-
-`$ python -c 'import os; print os.urandom(24).encode("hex")'`
-
-Set the `SECRET_KEY` environment variable to the value of the new key.
+|Variable                 |Default                      |
+|-------------------------|-----------------------------|
+|`CACHE_TIMEOUT`          |3600                         |
+|`TEMPLATES_FOLDER `      |"templates "                 |                     
+|`TEST_API_ENDPOINT`      |"/accounts"                  |
+|`FLASK_DEBUG      `      |True                         |
+|`SECRET_KEY`             | hex(16)                     |
 
 ## Copyright
 
