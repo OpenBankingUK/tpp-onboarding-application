@@ -6,6 +6,7 @@ import logging
 import os
 import uuid
 import time
+import secrets
 
 import cryptography
 from cryptography.hazmat.backends import default_backend
@@ -51,10 +52,7 @@ app = Flask(__name__, template_folder=TEMPLATES_FOLDER)
 app.debug = FLASK_DEBUG
 
 # Setting SECRET_KEY
-# >>> import os
-# >>> os.urandom(24)
-
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', secrets.token_hex(16))
 
 cache = SimpleCache()
 
