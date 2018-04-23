@@ -289,9 +289,11 @@ def createacsr_handler() -> Response:
 def createatoken_handler() -> Response:
     """Access Token handler
     """
+    kid = cache.get('kid')
     if request.method == 'POST':
 
-        cache.set('kid', request.form.get('kid'), timeout=CACHE_TIMEOUT)
+        kid = request.form.get('kid')
+        cache.set('kid', kid, timeout=CACHE_TIMEOUT)
 
         if cache.get('kid') and cache.get('software_statement_id') and cache.get('client_scopes') and cache.get(
                 'token_url'):
