@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  # tpp-onboarding-application.
+  tpp-onboarding-application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: tpp-onboarding-application
+    image: openbanking/tpp-onboarding-application:latest
+    volumes:
+      - .:/var/projects/openbanking
+    environment:
+      - CACHE_TIMEOUT=3600
+      - TEMPLATES_FOLDER=templates
+      - TEST_API_ENDPOINT=/accounts
+      - FLASK_DEBUG=True
+      - FLASK_APP=application.py
+    ports:
+      - "80:5000"
