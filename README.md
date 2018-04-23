@@ -1,35 +1,58 @@
 # tpp-onboarding-application
 Downloadable tool which allows creation of an SSA and onboarding with ASPSPs
 
-## Requirements
+## Prerequisites
 
-* Needs Python 3.6.2 or greater
-* `pip`
+Docker containers wrap up a piece of software in a complete filesystem that contains everything 
+it needs to run: code, runtime, system tools, system libraries etc.
+This guarantees that it will always run the same, regardless of the environment it is running in. 
+https://www.docker.com/what-docker
+
+All of the commands for interacting with the project should be issued within
+the `docker-compose` environment.
 
 ## Installation
 
-* pull from `master`
-* `pip install -r requirements.txt`
+To clone the repository, issue the following command:
 
-## Deployment Notes
+```bash
+git clone https://github.com/OpenBankingUK/tpp-onboarding-application
+```
 
-You will ned to generate a new secret key for your application.
+To build for testing in a local environment, change to the directory that you
+cloned the repository to and issue the following `docker-compose` command:
 
-### Generating secret key:
+```bash
+docker-compose -f local.yml build
+```
 
-`$ python -c 'import os; print os.urandom(24).encode("hex")'`
+This will fetch the all of the dependencies for the project.
 
-Set the `SECRET_KEY` environment variable to the value of the new key.
+## Usage
 
-### Environment variables
+All of the commands for interacting with the project should be issued within
+the `docker-compose` environment.
 
-Set `CACHE_TIMEOUT` to `3600`
+To start a local instance of the server, issue the following command:
 
-Set `TEMPLATES_FOLDER` to `templates`
+```bash
+docker-compose -f local.yml up
+```
 
-Set `TEST_API_ENDPOINT` to `/accounts`
+The server will be available at [http://localhost](http://localhost/).
 
-Set `FLASK_DEBUG` to `True`
+## Environment Variables
+
+This section documents the environment variables that can be used to configure
+an instance.
+
+|Variable                 |Default                      |
+|-------------------------|-----------------------------|
+|`CACHE_TIMEOUT`          |3600                         |
+|`TEMPLATES_FOLDER `      |"templates "                 |                     
+|`TEST_API_ENDPOINT`      |"/accounts"                  |
+|`FLASK_DEBUG      `      |True                         |
+|`SECRET_KEY`             | hex(16)                     |
 
 ## Copyright
 

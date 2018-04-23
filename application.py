@@ -6,6 +6,7 @@ import logging
 import os
 import uuid
 import time
+import secrets
 
 import cryptography
 from cryptography.hazmat.backends import default_backend
@@ -51,10 +52,7 @@ app = Flask(__name__, template_folder=TEMPLATES_FOLDER)
 app.debug = FLASK_DEBUG
 
 # Setting SECRET_KEY
-# >>> import os
-# >>> os.urandom(24)
-
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', secrets.token_hex(16))
 
 cache = SimpleCache()
 
@@ -291,9 +289,11 @@ def createacsr_handler() -> Response:
 def createatoken_handler() -> Response:
     """Access Token handler
     """
+    kid = cache.get('kid')
     if request.method == 'POST':
 
-        cache.set('kid', request.form.get('kid'), timeout=CACHE_TIMEOUT)
+        kid = request.form.get('kid')
+        cache.set('kid', kid, timeout=CACHE_TIMEOUT)
 
         if cache.get('kid') and cache.get('software_statement_id') and cache.get('client_scopes') and cache.get(
                 'token_url'):
@@ -456,4 +456,6 @@ def onboardapp_handler() -> Response:
 ################################################################################
 # End
 ################################################################################
-
+# required host 0.0.0.0 for docker.
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=FLASK_DEBUG)
