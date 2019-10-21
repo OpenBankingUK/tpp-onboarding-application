@@ -17,5 +17,5 @@ pycparser==2.18
 requests==2.18.2
 six==1.10.0
 urllib3==1.22
-Werkzeug==0.12.2
+Werkzeug==0.15.3
 WTForms==2.1
